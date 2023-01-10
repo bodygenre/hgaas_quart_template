@@ -22,7 +22,7 @@ This project shows how to do several things. Each thing is present in server.py,
   <span>api call with url param: </span><span class="value" id="url_param_value"></span>
 </p>
 ```
-``js
+```js
   jQuery.get("/example_url_param/foo", function(d) {
     jQuery('#url_param_value').text(d.changed)
   })
@@ -39,6 +39,7 @@ async def example_url_param(param):
 ### API GET with query param
 ```html
   <span>api call with query param: </span><span class="value" id="query_param_value"></span>
+```
 ```js
   jQuery.get("/example_query_param?param=bar", function(d) {
     jQuery('#query_param_value').text(d.changed)
