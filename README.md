@@ -125,3 +125,13 @@ if __name__ == "__main__":
 ```
 
 A background job is defined as an `async function`. The function must have a while or for loop in it. For most purposes, you'll use `await asyncio.sleep(duration)`. If your background job reads from an async source, like an async blocking queue or something, you can use that. I recommend an `asyncio.sleep(0.1)` at least. If this function winds up not returning the thread to asyncio, it will lock up your application. 
+
+
+
+# Single HTML file version
+
+It's my personal preference to keep html, javascript, and css in one simple short HTML file, so I've provided an additional version.
+
+`public/singlepage_index.html`
+
+It's accessible at <http://localhost:8094/public/singlepage_index.html>

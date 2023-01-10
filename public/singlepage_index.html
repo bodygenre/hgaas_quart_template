@@ -1,0 +1,53 @@
+<style type="text/css">
+  span.value { font-weight: bold; }
+</style>
+
+<h1>hi. 3</h1>
+
+<button class="do_update">get new values</button>
+
+<p>
+  <span>api call with url param: </span><span class="value" id="url_param_value"></span>
+</p>
+
+<p>
+  <span>api call with query param: </span><span class="value" id="query_param_value"></span>
+</p>
+
+<p>
+  <span>api post call with json data: </span><span class="value" id="post_param_value"></span>
+</p>
+
+<script type="text/javascript" src="//code.jquery.com/jquery-3.6.3.min.js"></script>
+<script type="text/javascript">
+  jQuery.get("/last_restart", function(d) { setInterval(function() { jQuery.get("/last_restart", function(dd) { if (d != dd) window.location.reload(); }) }, 3000) })
+
+  // jQuery.post doesn't set the right contentType for Quart, so we gotta do this
+  function post(url, data, fn) {
+    jQuery.ajax({
+      type: "POST",
+      contentType: "application/json; charset=utf-8",
+      url: url, 
+      data: JSON.stringify(data), 
+      success: fn
+    })
+  }
+
+  function update_values() {
+    jQuery.get("/example_url_param/foo", function(d) {
+      jQuery('#url_param_value').text(d.changed)
+    })
+    jQuery.get("/example_query_param?param=bar", function(d) {
+      jQuery('#query_param_value').text(d.changed)
+    })
+    post("/example_json_post", { param: "baz"}, function(d) {
+      jQuery('#post_param_value').text(d.changed)
+    })
+  }
+
+  update_values() // set initial values
+
+  jQuery('button.do_update').click(function() { 
+    update_values()
+  })
+</script>
