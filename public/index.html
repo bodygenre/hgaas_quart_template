@@ -1,0 +1,19 @@
+<link rel="stylesheet" href="/public/style.css?bust={{cachebust}}" />
+
+<h1>hi. 3</h1>
+
+<p>
+  <span>api call with url param: </span><span class="value" id="url_param_value"></span>
+</p>
+
+<p>
+  <span>api call with query param: </span><span class="value" id="query_param_value"></span>
+</p>
+
+<p>
+  <span>api post call with json data: </span><span class="value" id="post_param_value"></span>
+</p>
+
+<script type="text/javascript" src="//code.jquery.com/jquery-3.6.3.min.js"></script>
+<script type="text/javascript">jQuery.get("/last_restart", function(d) { setInterval(function() { jQuery.get("/last_restart", function(dd) { if (d != dd) window.location.reload(); }) }, 3000) })</script>
+<script type="text/javascript" src="/public/index.js?bust={{cachebust}}"></script>

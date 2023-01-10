@@ -1,0 +1,6 @@
+{
+    "cmd": "python3 server.py",
+    "port": 8093,
+    "auth_user": "",
+    "auth_password": ""
+}
