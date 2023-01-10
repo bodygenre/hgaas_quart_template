@@ -18,9 +18,7 @@ This project shows how to do several things. Each thing is present in server.py,
 ### API GET with URL param
 
 ```html
-<p>
   <span>api call with url param: </span><span class="value" id="url_param_value"></span>
-</p>
 ```
 ```js
   jQuery.get("/example_url_param/foo", function(d) {
