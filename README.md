@@ -9,10 +9,10 @@ This project shows how to do several things. Each thing is present in server.py,
 
 1. An API "GET" call with a URL parameter (`/example_url_param/foo`)
 2. An API "GET" call with a query parameter (`/example_query_param?param=bar`)
-3. An AP "POST" call with a JSON payload (`/example_json_post` `{"param": "baz"}`)
-4. Concurrent background jobs / scheduled tasks, run on the server
-5. Updating the DOM with javascript based on response data from API call
-6. Creating button events
+3. An API "POST" call with a JSON payload (`/example_json_post` `{"param": "baz"}`)
+4. Updating the DOM with javascript based on response data from API call
+5. Creating button events
+6. Concurrent background jobs / scheduled tasks, run on the server
 
 
 ### API GET with URL param
@@ -100,3 +100,28 @@ jQuery('button.do_update').click(function() {
 })
 ```
 
+### Concurrent Background Jobs on Server
+
+```python
+some_global_data = 1
+async def run_background_job():
+  global some_global_data
+  import random
+  while running:
+    # sets some_global_data to a random number once per second
+    some_global_data = 2*random.randint(1,10)
+    print("background job: ", some_global_data)
+    await asyncio.sleep(1)
+
+# ...
+
+if __name__ == "__main__":
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(asyncio.gather(
+        app.run_task(host="0.0.0.0", port=8094),
+        run_background_job(),
+        # put your other infinite-loop coroutines down here
+    ))
+```
+
+A background job is defined as an `async function`. The function must have a while or for loop in it. For most purposes, you'll use `await asyncio.sleep(duration)`. If your background job reads from an async source, like an async blocking queue or something, you can use that. I recommend an `asyncio.sleep(0.1)` at least. If this function winds up not returning the thread to asyncio, it will lock up your application. 
